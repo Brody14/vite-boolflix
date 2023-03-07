@@ -1,4 +1,13 @@
 <script >
+import store from '../store'
+
+export default {
+    data() {
+        return {
+            store,
+        }
+    },
+}
 
 </script>
 
@@ -8,8 +17,8 @@
             <img src="/img/logo.png" alt="">
         </figure>
         <div class="search-bar">
-            <input class="search" type="text">
-            <button>Cerca</button>
+            <input class="search" type="text" v-model="store.search">
+            <button @click="$emit('onSearch')">Cerca</button>
 
         </div>
     </header>
