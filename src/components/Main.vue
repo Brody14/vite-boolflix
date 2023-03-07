@@ -10,6 +10,29 @@ export default {
         return {
             store,
         }
+    },
+    methods: {
+        setLanguageFlag(movie) {
+            let flag = '';
+            switch (movie.original_language) {
+                case 'it':
+                    flag = '/img/it.png'
+                    break
+                case 'en':
+                    flag = 'img/gb.png'
+                    break
+                case 'es':
+                    flag = 'img/es.png'
+                    break
+                case 'fr':
+                    flag = 'img/fr.png'
+                    break
+                default:
+                    flag = 'img/place.png'
+            }
+            return flag
+
+        }
     }
 }
 </script>
@@ -17,7 +40,7 @@ export default {
 <template>
     <main class="main-content">
         <div class="container">
-            <Cards v-for="movie in store.movies" key="movie.id" :movie="movie" />
+            <Cards v-for="movie in store.movies" key="movie.id" :movie="movie" :flag="setLanguageFlag(movie)" />
         </div>
 
     </main>

@@ -1,8 +1,19 @@
 <script>
+import { stringifyExpression } from '@vue/compiler-core';
+
+
+
 export default {
+    components: {
+
+    },
     props: {
         movie: {
             type: Object,
+            required: true
+        },
+        flag: {
+            type: String,
             required: true
         }
     }
@@ -15,9 +26,10 @@ export default {
         <div class="card-body">
             <h2 class="title">Titolo: {{ movie.title }}</h2>
             <h3 class="original-title">Titolo originale: {{ movie.original_title }}</h3>
-            <p class="language"> Lingua: {{ movie.original_language }}</p>
+            <div>
+                <img :src="flag" alt="">
+            </div>
             <p class="vote">Voto: {{ parseInt(movie.vote_average) }}</p>
-
         </div>
     </div>
 </template>
