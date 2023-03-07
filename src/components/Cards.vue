@@ -16,7 +16,7 @@ export default {
             <h2 class="title">Titolo: {{ movie.title }}</h2>
             <h3 class="original-title">Titolo originale: {{ movie.original_title }}</h3>
             <p class="language"> Lingua: {{ movie.original_language }}</p>
-            <p class="vote">Voto: {{ movie.vote_average }}</p>
+            <p class="vote">Voto: {{ parseInt(movie.vote_average) }}</p>
 
         </div>
     </div>
