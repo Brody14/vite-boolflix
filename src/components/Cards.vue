@@ -26,6 +26,12 @@ export default {
         },
         vote() {
             return parseInt(this.result.vote_average)
+        },
+        path() {
+            if (this.result.poster_path === null) {
+                return '/img/movie_placeholder.png'
+            }
+            return 'https://image.tmdb.org/t/p/w185' + this.result.poster_path
         }
     }
 }
@@ -34,6 +40,9 @@ export default {
 
 <template>
     <div class="card">
+        <div class="card-img">
+            <img :src="path" alt="">
+        </div>
         <div class="card-body">
             <h2 class="title">Titolo: {{ title }}</h2>
             <h3 class="original-title">Titolo originale: {{ originalTitle }}</h3>
@@ -51,6 +60,10 @@ export default {
 
 .card {
     color: white;
+
+    .card-img img {
+        width: 340px;
+    }
 
     .card-body {
         padding: 20px;
