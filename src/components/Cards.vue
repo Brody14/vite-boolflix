@@ -1,20 +1,31 @@
 <script>
-import { stringifyExpression } from '@vue/compiler-core';
-
-
 
 export default {
     components: {
 
     },
     props: {
-        movie: {
+        result: {
             type: Object,
             required: true
         },
         flag: {
             type: String,
             required: true
+        }
+    },
+    computed: {
+        title() {
+            return this.result.name || this.result.title
+        },
+        originalTitle() {
+            return this.result.original_name || this.result.original_title
+        },
+        language() {
+            return this.result.original_language
+        },
+        vote() {
+            return parseInt(this.result.vote_average)
         }
     }
 }
@@ -24,13 +35,13 @@ export default {
 <template>
     <div class="card">
         <div class="card-body">
-            <h2 class="title">Titolo: {{ movie.title }}</h2>
-            <h3 class="original-title">Titolo originale: {{ movie.original_title }}</h3>
+            <h2 class="title">Titolo: {{ title }}</h2>
+            <h3 class="original-title">Titolo originale: {{ originalTitle }}</h3>
             <div v-if="flag !== ''">
                 <img :src="flag" alt="">
             </div>
-            <p v-else> {{ movie.original_language }}</p>
-            <p class="vote">Voto: {{ parseInt(movie.vote_average) }}</p>
+            <p v-else> {{ language }}</p>
+            <p class="vote">Voto: {{ vote }}</p>
         </div>
     </div>
 </template>

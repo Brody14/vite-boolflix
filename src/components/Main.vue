@@ -11,10 +11,15 @@ export default {
             store,
         }
     },
+    computed: {
+        mergedResults() {
+            return [...this.store.movies, ...this.store.series]
+        }
+    },
     methods: {
-        setLanguageFlag(movie) {
+        setLanguageFlag(result) {
             let flag = '';
-            switch (movie.original_language) {
+            switch (result.original_language) {
                 case 'it':
                     flag = '/img/it.png'
                     break
@@ -40,7 +45,7 @@ export default {
 <template>
     <main class="main-content">
         <div class="container">
-            <Cards v-for="movie in store.movies" key="movie.id" :movie="movie" :flag="setLanguageFlag(movie)" />
+            <Cards v-for="result in mergedResults" key="result.id" :result="result" :flag="setLanguageFlag(result)" />
         </div>
 
     </main>
