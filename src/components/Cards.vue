@@ -25,7 +25,7 @@ export default {
             return this.result.original_language
         },
         vote() {
-            return parseInt(this.result.vote_average)
+            return Math.round(this.result.vote_average / 2)
         },
         path() {
             if (this.result.poster_path === null) {
@@ -50,7 +50,14 @@ export default {
                 <img :src="flag" alt="">
             </div>
             <p v-else> {{ language }}</p>
-            <p class="vote">Voto: {{ vote }}</p>
+            <div class="icons-wrapper">
+                <div v-for="n in vote">
+                    <font-awesome-icon icon="fa-solid fa-star" />
+                </div>
+                <div v-for="n in 5 - vote">
+                    <font-awesome-icon icon="fa-regular fa-star" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -68,5 +75,10 @@ export default {
     .card-body {
         padding: 20px;
     }
+}
+
+.icons-wrapper {
+    color: rgb(255, 242, 4);
+    display: flex;
 }
 </style>
