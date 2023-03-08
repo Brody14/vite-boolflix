@@ -28,7 +28,7 @@ export default {
                     flag = 'img/fr.png'
                     break
                 default:
-                    flag = 'img/place.png'
+                    flag = ''
             }
             return flag
 

@@ -26,9 +26,10 @@ export default {
         <div class="card-body">
             <h2 class="title">Titolo: {{ movie.title }}</h2>
             <h3 class="original-title">Titolo originale: {{ movie.original_title }}</h3>
-            <div>
+            <div v-if="flag !== ''">
                 <img :src="flag" alt="">
             </div>
+            <p v-else> {{ movie.original_language }}</p>
             <p class="vote">Voto: {{ parseInt(movie.vote_average) }}</p>
         </div>
     </div>
