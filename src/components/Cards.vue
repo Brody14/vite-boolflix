@@ -32,6 +32,9 @@ export default {
                 return '/img/movie_placeholder.png'
             }
             return 'https://image.tmdb.org/t/p/w185' + this.result.poster_path
+        },
+        overview() {
+            return this.result.overview.slice(0, 150) + '...'
         }
     }
 }
@@ -44,13 +47,14 @@ export default {
             <img :src="path" alt="">
         </div>
         <div class="card-body">
-            <h2 class="title">Titolo: {{ title }}</h2>
-            <h3 class="original-title">Titolo originale: {{ originalTitle }}</h3>
+            <h2 class="main-title">Titolo: <span class="title"> {{ title }} </span> </h2>
+            <h3 class="main-original-title">Titolo originale: <span class="original-title"> {{ originalTitle }}</span></h3>
             <div v-if="flag !== ''">
                 <img :src="flag" alt="">
             </div>
             <p v-else> {{ language }}</p>
             <div class="icons-wrapper">
+                <p class="vote">Voto:</p>
                 <div v-for="n in vote">
                     <font-awesome-icon icon="fa-solid fa-star" />
                 </div>
@@ -58,6 +62,7 @@ export default {
                     <font-awesome-icon icon="fa-regular fa-star" />
                 </div>
             </div>
+            <p> {{ overview }}</p>
         </div>
     </div>
 </template>
@@ -67,18 +72,51 @@ export default {
 
 .card {
     color: white;
+    position: relative;
 
     .card-img img {
-        width: 340px;
+        width: 360px;
     }
 
     .card-body {
         padding: 20px;
+        position: absolute;
+        top: 0;
+        opacity: 0;
+
+        .main-title {
+            font-size: 20px;
+
+            .title {
+                font-weight: lighter;
+                font-size: 16px;
+            }
+        }
+
+        .original-title {
+            font-weight: lighter;
+            font-size: 16px;
+        }
+
     }
+}
+
+.card:hover .card-body {
+    opacity: 1;
+}
+
+.card:hover .card-img {
+    opacity: 0;
 }
 
 .icons-wrapper {
     color: rgb(255, 242, 4);
     display: flex;
+
+    .vote {
+        color: white;
+        font-weight: bold;
+        margin-right: 5px;
+    }
 }
 </style>

@@ -17,9 +17,7 @@ export default {
             <img src="/img/logo.png" alt="">
         </figure>
         <div class="search-bar">
-            <input class="search" type="text" v-model="store.search">
-            <button @click="$emit('onSearch')">Cerca</button>
-
+            <input @keyup.enter="$emit('onSearch')" class="search" type="text" v-model="store.search">
         </div>
     </header>
 </template>
@@ -36,6 +34,6 @@ export default {
 }
 
 .header__logo {
-    width: 200px;
+    width: 150px;
 }
 </style>
