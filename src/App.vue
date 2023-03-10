@@ -55,10 +55,24 @@ export default {
 </script>
 
 <template>
-  <Header @onSearch="fetchData" />
-  <Main />
+  <div class="content">
+    <Header @onSearch="fetchData" />
+    <Main class="main" />
+
+  </div>
 </template>
 
 <style lang="scss" >
 @use './style/general.scss';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+
+  .main {
+    flex-grow: 1;
+  }
+}
 </style>

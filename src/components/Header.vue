@@ -10,15 +10,15 @@ export default {
         return {
             store,
             show: false,
-            iconshow: true,
-
         }
     },
     methods: {
         toggleSearch() {
             this.show = !this.show
-            this.iconshow = !this.iconshow
         },
+        closeSearch() {
+            this.show = false
+        }
     }
 
 }
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <template>
-    <header class="main-header" @click.self="toggleSearch">
+    <header class="main-header" @click.self="closeSearch">
         <figure class="header__logo">
             <img src="/img/logo.png" alt="">
         </figure>
@@ -34,12 +34,11 @@ export default {
             <Navbar />
         </ul>
         <div class="search-bar">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search__icon" @click.stop="toggleSearch"
-                v-show="iconshow" />
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search__icon" @click.stop="toggleSearch" />
 
-            <div>
-                <input v-show="show" @keyup.enter="$emit('onSearch')" class="search__input" type="text"
-                    v-model="store.search" placeholder="Cerca film o serie tv">
+            <div class="search_input">
+                <input v-show="show" @keyup.enter="$emit('onSearch')" :class="['search__input', (show) ? 'active' : '']"
+                    type="text" v-model="store.search" placeholder="Cerca film o serie tv">
             </div>
         </div>
     </header>
@@ -55,7 +54,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-
 }
 
 .header__logo {
@@ -70,17 +68,30 @@ export default {
 
 .search-bar {
     margin-left: auto;
+    position: relative;
 
     .search__icon {
         color: white;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
     }
 
     .search__input {
-        background-color: unset;
+        background-color: transparent;
         border: 2px solid rgb(61, 61, 61);
         padding: 10px;
         border-radius: 15px;
         color: grey;
+        width: 0;
+        opacity: 0;
+        transition: width 10s;
+    }
+
+    .search__input.active {
+        width: 200px;
+        opacity: 1;
     }
 }
 </style>

@@ -1,9 +1,6 @@
 <script>
 
 export default {
-    components: {
-
-    },
     props: {
         result: {
             type: Object,
@@ -55,12 +52,16 @@ export default {
             <p v-else> {{ language }}</p>
             <div class="icons-wrapper">
                 <p class="vote">Voto:</p>
-                <div v-for="n in vote">
-                    <font-awesome-icon icon="fa-solid fa-star" />
-                </div>
-                <div v-for="n in 5 - vote">
-                    <font-awesome-icon icon="fa-regular fa-star" />
-                </div>
+                <ul v-for="n in vote" :key="n">
+                    <li>
+                        <font-awesome-icon icon="fa-solid fa-star" />
+                    </li>
+                </ul>
+                <ul v-for="n in 5 - vote" :key="5 + n">
+                    <li>
+                        <font-awesome-icon icon="fa-regular fa-star" />
+                    </li>
+                </ul>
             </div>
             <p> {{ overview }}</p>
         </div>
@@ -82,6 +83,10 @@ export default {
         padding: 20px;
         position: absolute;
         top: 0;
+        bottom: 0;
+        max-width: 100%;
+        max-height: 100%;
+        overflow: hidden;
         opacity: 0;
 
         .main-title {

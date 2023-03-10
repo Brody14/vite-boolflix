@@ -1,6 +1,7 @@
 <script >
 import Cards from './Cards.vue';
 import store from '../store'
+import axios from 'axios'
 
 export default {
     components: {
@@ -14,7 +15,7 @@ export default {
     computed: {
         mergedResults() {
             return [...this.store.movies, ...this.store.series]
-        }
+        },
     },
     methods: {
         setLanguageFlag(result) {
@@ -37,7 +38,19 @@ export default {
             }
             return flag
 
-        }
+        },
+        // fetchTrending() {
+        //     axios.get('https://api.themoviedb.org/3/trending/all/day?api_key=07957f00f230f554787ba82062ad2b4f').then(res => {
+        //         console.log(res.data.results)
+        //         const { results } = res.data
+        //         this.store.trending = results
+        //     }).catch(() => {
+        //         this.store.trending = []
+        //     })
+        // },
+    },
+    mounted() {
+        //this.fetchTrending()
     }
 }
 </script>
@@ -46,7 +59,9 @@ export default {
     <main class="main-content">
         <div class="container">
             <Cards v-for="result in mergedResults" key="result.id" :result="result" :flag="setLanguageFlag(result)" />
+
         </div>
+
 
     </main>
 </template>
@@ -56,11 +71,12 @@ export default {
 
 .main-content {
     background-color: $main-bg;
-    padding: 20px;
-}
+    padding: 40px 20px;
+    color: white;
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    .container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 </style>
