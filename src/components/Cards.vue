@@ -1,4 +1,6 @@
 <script>
+import store from '../store'
+import axios from 'axios'
 
 export default {
     props: {
@@ -9,6 +11,13 @@ export default {
         flag: {
             type: String,
             required: true
+        }
+    },
+    data() {
+        return {
+            store,
+            castMovies: [],
+            castSeries: [],
         }
     },
     computed: {
@@ -28,11 +37,45 @@ export default {
             if (this.result.poster_path === null) {
                 return '/img/movie_placeholder.png'
             }
-            return 'https://image.tmdb.org/t/p/w185' + this.result.poster_path
+            return 'https://image.tmdb.org/t/p/w342' + this.result.poster_path
         },
         overview() {
             return this.result.overview.slice(0, 150) + '...'
+        },
+        castInfo() {
+            return this.castMovies.concat(this.castSeries)
+        },
+        cast() {
+            return this.castInfo.splice(0, 5)
         }
+    },
+    methods: {
+        fetchCastMovie() {
+            axios.get(`https://api.themoviedb.org/3/movie/${this.result.id}/credits?api_key=07957f00f230f554787ba82062ad2b4f`)
+                .then(res => {
+                    //console.log(res)
+                    const { cast } = res.data
+                    this.castMovies = cast
+                    //console.log('cast', this.castMovies)
+                }).catch(() => {
+                    this.castMovies = []
+                })
+        },
+        fetchCastSeries() {
+            axios.get(`https://api.themoviedb.org/3/tv/${this.result.id}/credits?api_key=07957f00f230f554787ba82062ad2b4f`)
+                .then(res => {
+                    //console.log(res)
+                    const { cast } = res.data
+                    this.castSeries = cast
+                    //console.log('cast', this.castSeries)
+                }).catch(() => {
+                    this.castSeries = []
+                })
+        }
+    },
+    mounted() {
+        this.fetchCastMovie()
+        this.fetchCastSeries()
     }
 }
 
@@ -64,6 +107,11 @@ export default {
                 </ul>
             </div>
             <p> {{ overview }}</p>
+            <ul>
+                <p>Cast:</p>
+                <li v-for="(actor, i) in cast" :key="i">{{ actor.name }} </li>
+            </ul>
+
         </div>
     </div>
 </template>
@@ -84,9 +132,6 @@ export default {
         position: absolute;
         top: 0;
         bottom: 0;
-        max-width: 100%;
-        max-height: 100%;
-        overflow: hidden;
         opacity: 0;
 
         .main-title {

@@ -39,16 +39,18 @@ export default {
             return flag
 
         },
-        // fetchTrending() {
-        //     axios.get('https://api.themoviedb.org/3/trending/all/day?api_key=07957f00f230f554787ba82062ad2b4f').then(res => {
-        //         console.log(res.data.results)
-        //         const { results } = res.data
-        //         this.store.trending = results
-        //     }).catch(() => {
-        //         this.store.trending = []
-        //     })
-        // },
+
     },
+    // fetchTrending() {
+    //     axios.get('https://api.themoviedb.org/3/trending/all/day?api_key=07957f00f230f554787ba82062ad2b4f').then(res => {
+    //         console.log(res.data.results)
+    //         const { results } = res.data
+    //         this.store.trending = results
+    //     }).catch(() => {
+    //         this.store.trending = []
+    //     })
+    // },
+    // },
     mounted() {
         //this.fetchTrending()
     }
@@ -76,7 +78,7 @@ export default {
 
     .container {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 </style>
