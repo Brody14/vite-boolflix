@@ -16,9 +16,14 @@ export default {
         toggleSearch() {
             this.show = !this.show
         },
-        closeSearch() {
-            this.show = false
+        closeSearch(event) {
+            if (!event.target.closest('.search_input')) {
+                this.show = false
+            }
         }
+    },
+    mounted() {
+        window.addEventListener('click', this.closeSearch)
     }
 
 }
@@ -26,7 +31,7 @@ export default {
 </script>
 
 <template>
-    <header class="main-header" @click.self="closeSearch">
+    <header class="main-header">
         <figure class="header__logo">
             <img src="/img/logo.png" alt="">
         </figure>
@@ -34,7 +39,8 @@ export default {
             <Navbar />
         </ul>
         <div class="search-bar">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search__icon" @click.stop="toggleSearch" />
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search__icon"
+                @click.stop.prevent="toggleSearch" />
 
             <div class="search_input">
                 <input v-show="show" @keyup.enter="$emit('onSearch')" :class="['search__input', (show) ? 'active' : '']"

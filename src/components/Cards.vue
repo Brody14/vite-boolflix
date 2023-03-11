@@ -18,6 +18,8 @@ export default {
             store,
             castMovies: [],
             castSeries: [],
+            movieGenres: [],
+            seriesGenres: []
         }
     },
     computed: {
@@ -47,11 +49,26 @@ export default {
         },
         cast() {
             return this.castInfo.splice(0, 5)
-        }
+        },
+        resultId() {
+            return this.result.genre_ids
+        },
+        genres() {
+            return this.resultGenres.filter(el => this.resultId.includes(el.id))
+        },
+        resultGenres() {
+            return [...new Set(...[this.movieGenres, this.seriesGenres])]
+        },
     },
     methods: {
+        fetchData() {
+            this.fetchCastMovie()
+            this.fetchCastSeries()
+            this.fetchMovieGenre()
+            this.fetchSeriesGenre()
+        },
         fetchCastMovie() {
-            axios.get(`https://api.themoviedb.org/3/movie/${this.result.id}/credits?api_key=07957f00f230f554787ba82062ad2b4f`)
+            axios.get(`https://api.themoviedb.org/3/movie/${this.result.id}/credits?api_key=07957f00f230f554787ba82062ad2b4f&language=it-IT`)
                 .then(res => {
                     //console.log(res)
                     const { cast } = res.data
@@ -62,7 +79,7 @@ export default {
                 })
         },
         fetchCastSeries() {
-            axios.get(`https://api.themoviedb.org/3/tv/${this.result.id}/credits?api_key=07957f00f230f554787ba82062ad2b4f`)
+            axios.get(`https://api.themoviedb.org/3/tv/${this.result.id}/credits?api_key=07957f00f230f554787ba82062ad2b4f&language=it-IT`)
                 .then(res => {
                     //console.log(res)
                     const { cast } = res.data
@@ -71,13 +88,38 @@ export default {
                 }).catch(() => {
                     this.castSeries = []
                 })
-        }
+        },
+        fetchMovieGenre() {
+            axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=07957f00f230f554787ba82062ad2b4f&language=it-IT')
+                .then(res => {
+                    //console.log(res)
+                    const { genres } = res.data
+                    this.movieGenres = genres
+                    //console.log('film', this.movieGenres)
+
+                }).catch(() => {
+                    this.movieGenres = []
+                })
+        },
+        fetchSeriesGenre() {
+            axios.get('https://api.themoviedb.org/3/genre/tv/list?api_key=07957f00f230f554787ba82062ad2b4f&language=it-IT')
+                .then(res => {
+                    //console.log(res)
+                    const { genres } = res.data
+                    this.seriesGenres = genres
+                    //console.log(this.seriesGenres)
+
+                }).catch(() => {
+                    this.seriesGenres = []
+                })
+        },
+
     },
     mounted() {
-        this.fetchCastMovie()
-        this.fetchCastSeries()
-    }
+        this.fetchData()
+    },
 }
+
 
 </script>
 
@@ -87,14 +129,14 @@ export default {
             <img :src="path" alt="">
         </div>
         <div class="card-body">
-            <h2 class="main-title">Titolo: <span class="title"> {{ title }} </span> </h2>
+            <h2 class="main-title">Titolo: <span class="title"> {{ result.title }} </span> </h2>
             <h3 class="main-original-title">Titolo originale: <span class="original-title"> {{ originalTitle }}</span></h3>
             <div v-if="flag !== ''">
                 <img :src="flag" alt="">
             </div>
             <p v-else> {{ language }}</p>
             <div class="icons-wrapper">
-                <p class="vote">Voto:</p>
+                <h4 class="vote">Voto:</h4>
                 <ul v-for="n in vote" :key="n">
                     <li>
                         <font-awesome-icon icon="fa-solid fa-star" />
@@ -108,8 +150,12 @@ export default {
             </div>
             <p> {{ overview }}</p>
             <ul>
-                <p>Cast:</p>
+                <h4>Cast:</h4>
                 <li v-for="(actor, i) in cast" :key="i">{{ actor.name }} </li>
+            </ul>
+            <ul>
+                <h4>Generi correlati: </h4>
+                <li v-for="el in genres" :key="el"> {{ el.name }} </li>
             </ul>
 
         </div>
@@ -147,7 +193,6 @@ export default {
             font-weight: lighter;
             font-size: 16px;
         }
-
     }
 }
 

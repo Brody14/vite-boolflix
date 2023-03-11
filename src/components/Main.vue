@@ -1,7 +1,7 @@
 <script >
 import Cards from './Cards.vue';
 import store from '../store'
-import axios from 'axios'
+//import axios from 'axios'
 
 export default {
     components: {
@@ -40,19 +40,19 @@ export default {
 
         },
 
+        // fetchTrending() {
+        //     axios.get('https://api.themoviedb.org/3/trending/all/day?api_key=07957f00f230f554787ba82062ad2b4f').then(res => {
+        //         console.log(res.data.results)
+        //         const { results } = res.data
+        //         this.store.trending = results
+        //     }).catch(() => {
+        //         this.store.trending = []
+        //     })
+        // },
     },
-    // fetchTrending() {
-    //     axios.get('https://api.themoviedb.org/3/trending/all/day?api_key=07957f00f230f554787ba82062ad2b4f').then(res => {
-    //         console.log(res.data.results)
-    //         const { results } = res.data
-    //         this.store.trending = results
-    //     }).catch(() => {
-    //         this.store.trending = []
-    //     })
-    // },
-    // },
+
     mounted() {
-        //this.fetchTrending()
+        // this.fetchTrending()
     }
 }
 </script>
@@ -60,11 +60,8 @@ export default {
 <template>
     <main class="main-content">
         <div class="container">
-            <Cards v-for="result in mergedResults" key="result.id" :result="result" :flag="setLanguageFlag(result)" />
-
+            <Cards v-for="result in mergedResults" :key="result.id" :result="result" :flag="setLanguageFlag(result)" />
         </div>
-
-
     </main>
 </template>
 

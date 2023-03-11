@@ -29,7 +29,7 @@ export default {
       if (this.search !== '') {
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=07957f00f230f554787ba82062ad2b4f&language=it-IT&query=${this.search}`)
           .then((res) => {
-            console.log(res.data.results)
+            //console.log(res.data.results)
             const movie = res.data.results
             this.store.movies = movie
           }).catch(() => {
@@ -41,7 +41,7 @@ export default {
       if (this.search !== '') {
         axios.get(`https://api.themoviedb.org/3/search/tv?api_key=07957f00f230f554787ba82062ad2b4f&language=it-IT&query=${this.search}`)
           .then((res) => {
-            console.log(res.data.results)
+            //console.log(res.data.results)
             const tv = res.data.results
             this.store.series = tv
           }).catch(() => {
