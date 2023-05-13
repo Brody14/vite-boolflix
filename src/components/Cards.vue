@@ -125,39 +125,42 @@ export default {
 
 <template>
     <div class="card">
-        <div class="card-img">
-            <img :src="path" alt="">
-        </div>
-        <div class="card-body">
-            <h2 class="main-title">Titolo: <span class="title"> {{ result.title }} </span> </h2>
-            <h3 class="main-original-title">Titolo originale: <span class="original-title"> {{ originalTitle }}</span></h3>
-            <div v-if="flag !== ''">
-                <img :src="flag" alt="">
+        <div class="card-container">
+            <div class="card-img">
+                <img :src="path" alt="">
             </div>
-            <p v-else> {{ language }}</p>
-            <div class="icons-wrapper">
-                <h4 class="vote">Voto:</h4>
-                <ul v-for="n in vote" :key="n">
-                    <li>
-                        <font-awesome-icon icon="fa-solid fa-star" />
-                    </li>
+            <div class="card-body">
+                <h2 class="main-title">Titolo: <span class="title"> {{ result.title }} </span> </h2>
+                <h3 class="main-original-title">Titolo originale: <span class="original-title"> {{ originalTitle }}</span>
+                </h3>
+                <div v-if="flag !== ''">
+                    <img :src="flag" alt="">
+                </div>
+                <p v-else> {{ language }}</p>
+                <div class="icons-wrapper">
+                    <h4 class="vote">Voto:</h4>
+                    <ul v-for="n in vote" :key="n">
+                        <li>
+                            <font-awesome-icon icon="fa-solid fa-star" />
+                        </li>
+                    </ul>
+                    <ul v-for="n in 5 - vote" :key="5 + n">
+                        <li>
+                            <font-awesome-icon icon="fa-regular fa-star" />
+                        </li>
+                    </ul>
+                </div>
+                <p> {{ overview }}</p>
+                <ul>
+                    <h4>Cast:</h4>
+                    <li v-for="(actor, i) in cast" :key="i">{{ actor.name }} </li>
                 </ul>
-                <ul v-for="n in 5 - vote" :key="5 + n">
-                    <li>
-                        <font-awesome-icon icon="fa-regular fa-star" />
-                    </li>
+                <ul>
+                    <h4>Generi correlati: </h4>
+                    <li v-for="el in genres" :key="el"> {{ el.name }} </li>
                 </ul>
-            </div>
-            <p> {{ overview }}</p>
-            <ul>
-                <h4>Cast:</h4>
-                <li v-for="(actor, i) in cast" :key="i">{{ actor.name }} </li>
-            </ul>
-            <ul>
-                <h4>Generi correlati: </h4>
-                <li v-for="el in genres" :key="el"> {{ el.name }} </li>
-            </ul>
 
+            </div>
         </div>
     </div>
 </template>
@@ -167,18 +170,37 @@ export default {
 
 .card {
     color: white;
+    width: 300px;
+    height: 160px;
+    scroll-behavior: smooth;
     position: relative;
+    display: flex;
+
+    .card-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+    }
 
     .card-img img {
-        width: 360px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 16/9;
     }
 
     .card-body {
+
         padding: 20px;
+        height: 100%;
+        width: 100%;
         position: absolute;
         top: 0;
         bottom: 0;
         opacity: 0;
+        word-break: break-all;
+        overflow-x: hidden;
 
         .main-title {
             font-size: 20px;
@@ -193,14 +215,15 @@ export default {
             font-weight: lighter;
             font-size: 16px;
         }
+
     }
 }
 
-.card:hover .card-body {
+.card-container:hover .card-body {
     opacity: 1;
 }
 
-.card:hover .card-img {
+.card-container:hover .card-img {
     opacity: 0;
 }
 

@@ -5,6 +5,8 @@ const store = reactive({
 	movies: [],
 	series: [],
 	trending: [],
+	topRated: [],
+	isVisible: true,
 });
 
 export default store;

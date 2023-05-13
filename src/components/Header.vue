@@ -55,7 +55,7 @@ export default {
 
 .main-header {
     background-color: $header-bg;
-    padding: 20px;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;

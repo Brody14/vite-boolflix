@@ -23,6 +23,7 @@ export default {
     fetchData() {
       this.fetchMovies()
       this.fetchTv()
+      store.isVisible = false
     },
     fetchMovies() {
 
